@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 import PageHeader from "./components/PageHeader.vue";
 import CountryList from "./components/CountryList.vue";
@@ -19,8 +19,12 @@ const fetchCountries = async () => {
     const { data } = await axiosClient.get("/all");
     countries.value = data;
     totalItems.value = countries.value.length;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.error('Error fetching countries:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    });
   }
 };
 
